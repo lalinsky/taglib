@@ -14,6 +14,7 @@ class TestWavPack : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestWavPack);
   CPPUNIT_TEST(testBasic);
   CPPUNIT_TEST(testLengthScan);
+  CPPUNIT_TEST(testFuzzedFile);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -33,6 +34,12 @@ public:
     WavPack::File f(TEST_FILE_PATH_C("no_length.wv"));
     WavPack::Properties *props = f.audioProperties();
     CPPUNIT_ASSERT_EQUAL(4, props->length());
+  }
+
+  void testFuzzedFile()
+  {
+    WavPack::File f(TEST_FILE_PATH_C("infloop.wv"));
+    CPPUNIT_ASSERT(f.isValid());
   }
 
 };
